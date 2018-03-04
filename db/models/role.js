@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Role = sequelize.define('Role', {
-    roleID: {
+    roleId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true

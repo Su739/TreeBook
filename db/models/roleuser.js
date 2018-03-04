@@ -1,12 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var RoleUser = sequelize.define('RoleUser', {
-    roleID: {
+    roleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    userID: {
+    userId: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true

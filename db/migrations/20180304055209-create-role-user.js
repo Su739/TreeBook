@@ -2,12 +2,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('RoleUsers', {
-      roleID: {
+      roleId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
-      userID: {
+      userId: {
         type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true
