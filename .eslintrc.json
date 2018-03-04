@@ -1,3 +1,10 @@
 {
-    "extends": "standard"
+    "extends": "standard",
+    "rules":{
+        "no-extra-semi": 2,
+        "space-before-function-paren": [0, "always"],
+        "quotes": [1, "single"],
+        "semi": [2, "always"]
+    }
+
 }
