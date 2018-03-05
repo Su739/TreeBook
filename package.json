@@ -24,7 +24,10 @@
     "bluebird": "~3.5.1",
     "connect-redis": "~3.3.3",
     "passport-local": "~1.0.0",
-    "connect-ensure-login": "~0.1.1"
+    "connect-ensure-login": "~0.1.1",
+    "mocha": "~5.0.1",
+    "chai": "~4.1.2",
+    "chai-http": "~3.0.0"
   },
   "devDependencies": {
     "eslint": "^4.18.2",
