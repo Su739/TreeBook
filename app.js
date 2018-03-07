@@ -8,6 +8,7 @@ const session = require('express-session');
 const redis = require('redis');
 const client = redis.createClient();
 const RedisStore = require('connect-redis')(session);
+const passport = require('passport');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -24,16 +25,19 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
   cookie: {
     maxAge: 50000
   },
   store: new RedisStore({ client: client }),
-  secret: 'secret',
+  secret: 'keybord cat',
   resave: false,
   saveUninitialized: false
 }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);

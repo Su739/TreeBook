@@ -1,9 +1,10 @@
 const passport = require('passport');
-const LocalStrategy = require('passport-local').LocalStrategy;
+const LocalStrategy = require('passport-local').Strategy;
 
 const init = require('./passport');
 const User = require('../../db/db-repo').User;
 const authHelpers = require('./auth-helpers');
+const Op = require('../../db/db-repo').Op;
 
 const opts = {};
 
@@ -16,12 +17,18 @@ init();
 // that the password is correct and then invoke `cb` with a user object, which
 // will be set at `req.user` in route handlers after authentication.
 passport.use(new LocalStrategy(opts, (username, password, cb) => {
-  User.findOne({ where: {userName: username} })
+  User.findOne({ where: {
+    [Op.or]: [
+      {userName: username},
+      {email: username}
+    ] }
+  })
     .then(user => {
       if (!user) return cb(null, false);
-      authHelpers.comparePass(password, user.password)
-        .then(user => cb(null, user))
-        .catch(err => cb(err, false));
+      // 注意comparePass成功返回true，不是user
+      authHelpers.comparePass(password, user.passwordHash)
+        .then(() => cb(null, user))
+        .catch(() => cb(null, false));
     })
     .catch(err => { return cb(err); });
 }));
