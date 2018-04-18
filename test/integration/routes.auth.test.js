@@ -13,7 +13,7 @@ describe('routes : index', () => {
   before(() => {
     return User.findOne({where: {userName: 'su'}})
       .then(user => user.destroy())
-      .then(console.log("I'm gone"))
+      .then(console.log('I am gone'))
       .catch(err => console.log(err));
   });
   after(() => console.log('well done'));
