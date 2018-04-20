@@ -27,7 +27,13 @@ passport.use(new LocalStrategy(opts, (username, password, cb) => {
       if (!user) return cb(null, false);
       // 注意comparePass成功返回true，不是user
       authHelpers.comparePass(password, user.passwordHash)
-        .then(() => cb(null, user))
+        .then((ok) => {
+          if (ok) {
+            cb(null, user);
+          } else {
+            cb(null, false);
+          }
+        })
         .catch(() => cb(null, false));
     })
     .catch(err => { return cb(err); });

@@ -10,8 +10,9 @@ const client = redis.createClient();
 const RedisStore = require('connect-redis')(session);
 const passport = require('passport');
 
-const index = require('./routes/index');
+const auth = require('./routes/auth');
 const users = require('./routes/users');
+const api = require('./routes/api');
 
 const app = express();
 
@@ -28,7 +29,7 @@ app.use(cookieParser());
 
 app.use(session({
   cookie: {
-    maxAge: 50000
+    maxAge: 5000000
   },
   store: new RedisStore({ client: client }),
   secret: 'keybord cat',
@@ -39,8 +40,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', index);
+app.use('/auth', auth);
 app.use('/users', users);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

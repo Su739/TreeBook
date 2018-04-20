@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     profession: DataTypes.STRING,
     company: DataTypes.STRING
   }, {});
-  UserProfile.belongsTo(User, 'user_profile_user_fkey');
+
   UserProfile.associate = function(models) {
     // associations can be defined here
   };

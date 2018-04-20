@@ -9,6 +9,7 @@ const sequelize = new Sequelize(database, username, password, {
 const user = require('./models/user');
 const book = require('./models/book');
 const article = require('./models/article');
+const userprofile = require('./models/userprofile');
 exports.testConnection = () => sequelize
   .authenticate()
   .then(() => {
@@ -20,4 +21,5 @@ exports.testConnection = () => sequelize
 exports.User = user(sequelize, Sequelize);
 exports.Book = book(sequelize, Sequelize);
 exports.Article = article(sequelize, Sequelize);
+exports.UserProfile = userprofile(sequelize, Sequelize);
 exports.Op = Sequelize.Op;

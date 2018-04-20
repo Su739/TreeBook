@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     writerId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: User,
