@@ -16,10 +16,11 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
+    "username": "szy",
+    "password": "asdasdasd123",
+    "database": "szyblog",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "port": "5432",
+    "dialect": "postgres"
   }
 }
