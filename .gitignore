@@ -61,3 +61,7 @@ typings/
 .next
 # ico
 *ico
+
+# images
+public/images
+public/avatars
