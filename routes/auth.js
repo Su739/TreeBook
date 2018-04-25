@@ -22,6 +22,7 @@ router.post('/register', (req, res, next) => {
           })(req, res, next);
         })
         .catch((err) => {
+          console.log(err);
           res.status(500).json({status: 'createuser-error', error: err});
         });
     })

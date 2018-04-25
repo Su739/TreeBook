@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "szy",
-    "password": "xxxxx",
+    "password": "asdasdasd123",
     "database": "szyblog",
     "host": "127.0.0.1",
     "port": "5432",
@@ -9,7 +9,7 @@
   },
   "test": {
     "username": "szy",
-    "password": "xxxx",
+    "password": "asdasdasd123",
     "database": "szyblog",
     "host": "127.0.0.1",
     "port": "5432",
@@ -17,7 +17,7 @@
   },
   "production": {
     "username": "szy",
-    "password": "xxxxxx",
+    "password": "asdasdasd123",
     "database": "szyblog",
     "host": "127.0.0.1",
     "port": "5432",

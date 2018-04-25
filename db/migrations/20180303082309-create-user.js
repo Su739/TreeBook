@@ -34,7 +34,7 @@ module.exports = {
       },
       securityStamp: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       concurrencyStamp: {
         type: Sequelize.UUID,
