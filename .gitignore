@@ -65,3 +65,6 @@ typings/
 # images
 public/images
 public/avatars
+
+# db config file
+db/*.json
