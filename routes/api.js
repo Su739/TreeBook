@@ -226,7 +226,7 @@ router.get('/users/:name', function(req, res, next) {
   })
     .then(user => {
       if (user) {
-        res.status(200).json({user});
+        res.status(200).json(user);
         return;
       }
       res.status(404).json({error: '您访问的网址不存在'});
