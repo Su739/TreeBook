@@ -179,7 +179,7 @@ router.get('/books/:bookId', function(req, res, next) {
           where: {
             parent: req.params.bookId
           },
-          attributes: ['id', 'title', 'depth', 'parent', 'order', 'public', 'updatedAt']
+          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'public', 'updatedAt']
         })
           .then(articles => {
             if (articles) {
@@ -197,7 +197,7 @@ router.get('/books/:bookId', function(req, res, next) {
               {public: true}
             ]
           },
-          attributes: ['id', 'title', 'depth', 'parent', 'order', 'public', 'updatedAt']
+          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'public', 'updatedAt']
         })
           .then(articles => {
             if (articles) {
