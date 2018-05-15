@@ -7,6 +7,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    superior: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     title: {
       allowNull: false,
       type: DataTypes.STRING(60)

@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Books', [
       {
         name: '故事汇',
-        writerId: 'c1be8eb0-43db-11e8-82b6-0349fb3cde29',
+        writerId: 'e1a7fbe0-487b-11e8-8a61-ad7501e91c5a',
         description: '兄弟，讲故事的不应该时zj大哥么',
         public: true,
         createdAt: new Date(Date.now()),
@@ -13,7 +13,7 @@ module.exports = {
       },
       {
         name: '故事汇2',
-        writerId: 'c1be8eb0-43db-11e8-82b6-0349fb3cde29',
+        writerId: 'e1a7fbe0-487b-11e8-8a61-ad7501e91c5a',
         description: '兄弟，讲故事的不应该时zj大哥么',
         public: true,
         createdAt: new Date(Date.now()),
