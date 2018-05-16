@@ -39,7 +39,9 @@ router.post('/upload/image', ensureLoggedIn('/login'), uploadImage, function(req
 router.post('/articles/article', ensureLoggedIn('/login'), function(req, res, next) {
   const { id, title, depth, parent, content, order, ispublic, updatedAt, writerid } = req.body;// writerid不是articles中的字段，用来判断文章归属
   // 这个parent对应book里面外键id，所以不能少也不能错,剩下的货是not null字段
-  if (!(parent && title && depth && order && ispublic)) {
+  console.log(req.body);
+  console.log('req.body');
+  if (!(parent && title && typeof depth === 'number' && order && ispublic)) {
     res.status(500).json('程序有问题请修复！！！用户id不存在');
   } else {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
