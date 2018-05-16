@@ -37,23 +37,21 @@ router.post('/upload/image', ensureLoggedIn('/login'), uploadImage, function(req
 
 /* POST create or update a book */
 router.post('/articles/article', ensureLoggedIn('/login'), function(req, res, next) {
-  const { id, title, depth, parent, content, order, ispublic, updatedAt, writerid } = req.body;// writerid不是articles中的字段，用来判断文章归属
+  const { id, title, depth, parent, content, order, ispublic, updatedAt, writerid, superior } = req.body;// writerid不是articles中的字段，用来判断文章归属
   // 这个parent对应book里面外键id，所以不能少也不能错,剩下的货是not null字段
-  console.log(req.body);
-  console.log('req.body');
-  if (!(parent && title && typeof depth === 'number' && order && ispublic)) {
+  if (!(parent && title && typeof depth === 'number' && order && ispublic && superior)) {
     res.status(500).json('程序有问题请修复！！！用户id不存在');
   } else {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
       if (!id) {
         Article.create({
-          title, depth, parent, content, order, public: ispublic, updatedAt
+          title, depth, parent, content, order, public: ispublic, updatedAt, superior
         })
           .then(article => res.status(200).json(article))
           .catch(err => res.status(500).json(err.message));
       } else {
         Article.update({
-          title, depth, parent, content, order, public: ispublic, updatedAt
+          title, depth, parent, content, order, public: ispublic, updatedAt, superior
         }, {
           where: {id: id},
           returning: true
