@@ -42,6 +42,7 @@ router.post('/articles/article', ensureLoggedIn('/login'), function(req, res, ne
   if (!(parent && title && typeof depth === 'number' && order && ispublic && superior)) {
     res.status(500).json('程序有问题请修复！！！用户id不存在');
   } else {
+    console.log(req.user);
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
       if (!id) {
         Article.create({

@@ -13,6 +13,8 @@ const auth = require('./routes/auth');
 const users = require('./routes/users');
 const api = require('./routes/api');
 
+const authCookieField = require('./middleware/authCookieField');
+
 const app = express();
 
 // view engine setup
@@ -38,6 +40,8 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(authCookieField);
 
 app.use('/auth', auth);
 app.use('/users', users);
