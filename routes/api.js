@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const { User, Book, Article, UserProfile, Op } = require('../db/db-repo');
-const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+const ensureLoggedIn = require('../middleware/ensureLoggedIn');
 const { uploadAvatar, uploadImage } = require('./utils/fileStorage');
 
 const router = express.Router();
