@@ -24,7 +24,7 @@ passport.use(new LocalStrategy(opts, (username, password, cb) => {
     ] }
   })
     .then(user => {
-      if (!user) return cb(null, false);
+      if (!user) return cb(new Error('用户不存在'), false);
       // 注意comparePass成功返回true，不是user
       authHelpers.comparePass(password, user.passwordHash)
         .then((ok) => {

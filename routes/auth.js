@@ -18,18 +18,20 @@ router.post('/register', (req, res, next) => {
       createUser(req, res)
         .spread((user, created) => {
           if (!created) {
-            res.status(400).json('该用户名已存在');
+            res.status(401).json({error: '该用户名已存在,换一个试试吧'});
           }
           passport.authenticate('local', (err, user, info) => {
-            if (err) res.status(500).json({status: 'authenticate-error', error: err});
+            if (err) res.status(401).json({error: err.message});
             if (user) {
-              res.status(200).json('register success');
+              res.status(200).json({
+                id: user.id, name: user.userName, email: user.email
+              });
             }
           })(req, res, next);
         })
         .catch((err) => {
           console.log(err);
-          res.status(500).json({status: 'createuser-error', error: err});
+          res.status(500).json({error: '服务器创建用户出错，请联系管理员'});
         });
     })
     .catch(error => res.status(400).json(error.message));
@@ -40,11 +42,11 @@ router.post('/login', (req, res, next) => {
   validUserName(req)
     .then(() => {
       passport.authenticate('local', (err, user, info) => {
-        if (err) res.status(500).json({status: 'authenticate-error', error: err});
-        if (!user) res.status(404).json('not found user');
+        if (err) res.status(401).json({error: err.message});
+        if (!user) res.status(401).json({error: '密码错误'});
         if (user) {
           req.logIn(user, function(err) {
-            if (err) res.status(500).json({status: 'login-error', error: err});
+            if (err) res.status(500).json({error: err});
             res.status(200).json({
               id: user.id, name: user.userName, email: user.email
             });
@@ -52,13 +54,13 @@ router.post('/login', (req, res, next) => {
         }
       })(req, res, next);
     })
-    .catch(error => res.status(400).json(error.message));
+    .catch(error => res.status(401).json({error: error.message}));
 });
 
 /* GET logout. */
 router.get('/logout', (req, res, next) => {
   req.logout();
-  res.status(200).json('success log out');
+  res.status(200).json({success: '您已退出登录'});
 });
 
 module.exports = router;
