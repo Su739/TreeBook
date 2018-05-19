@@ -48,6 +48,8 @@ router.post('/login', (req, res, next) => {
         if (user) {
           req.logIn(user, function(err) {
             if (err) res.status(500).json({error: err});
+            res.cookie('isLogged', true, { expires: new Date(Date.now() + 10 * 60 * 60 * 24 * 1000) });
+            res.cookie('userName', req.user.dataValues.userName, { expires: new Date(Date.now() + 10 * 60 * 60 * 24 * 1000) });
             res.status(200).json({
               id: user.id, name: user.userName, email: user.email
             });
@@ -61,6 +63,8 @@ router.post('/login', (req, res, next) => {
 /* GET logout. */
 router.get('/logout', (req, res, next) => {
   req.logout();
+  res.cookie('isLogged', false, { expires: new Date(Date.now() + 10 * 60 * 60 * 24 * 1000) });
+  res.cookie('userName', 'null', { expires: new Date(Date.now() + 10 * 60 * 60 * 24 * 1000) });
   res.status(200).json({success: '您已退出登录'});
 });
 
