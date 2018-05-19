@@ -1,5 +1,5 @@
 function authCookieField(req, res, next) {
-  console.log(req.cookie);
+  console.log(req.cookies);
   const { isLogged } = req.cookies;
   if (!req.isAuthenticated || !req.isAuthenticated()) {
     if (isLogged) {
