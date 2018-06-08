@@ -22,7 +22,7 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      public: {
+      ispublic: {
         allowNull: false,
         type: Sequelize.BOOLEAN
       },

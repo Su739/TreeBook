@@ -49,13 +49,13 @@ router.post('/articles/article', ensureLoggedIn(), function(req, res, next) {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
       if (!id) {
         Article.create({
-          title, depth, parent, content, order, public: ispublic, updatedAt, superior
+          title, depth, parent, content, order, ispublic, updatedAt, superior
         })
           .then(article => res.status(200).json(article))
           .catch(err => res.status(500).json({error: err.message}));
       } else {
         Article.update({
-          title, depth, parent, content, order, public: ispublic, updatedAt, superior
+          title, depth, parent, content, order, ispublic, updatedAt, superior
         }, {
           where: {id: id},
           returning: true
@@ -85,13 +85,13 @@ router.post('/books/book', ensureLoggedIn(), function(req, res, next) {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
       if (!id) {
         Book.create({
-          name, writerId: writerid, description, public: ispublic, company, updatedAt
+          name, writerId: writerid, description, ispublic, company, updatedAt
         })
           .then(book => res.status(200).json(book))
           .catch(err => res.status(500).json({error: err.message}));
       } else {
         Book.update({
-          name, writerId: writerid, description, public: ispublic, company, updatedAt
+          name, writerId: writerid, description, ispublic, company, updatedAt
         }, {
           where: {id: id},
           returning: true
@@ -183,7 +183,7 @@ router.get('/books/:bookId', function(req, res, next) {
           where: {
             parent: req.params.bookId
           },
-          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'public', 'updatedAt']
+          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt']
         })
           .then(articles => {
             if (articles) {
@@ -201,7 +201,7 @@ router.get('/books/:bookId', function(req, res, next) {
               {public: true}
             ]
           },
-          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'public', 'updatedAt']
+          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt']
         })
           .then(articles => {
             if (articles) {
@@ -222,7 +222,7 @@ router.get('/users/:name', function(req, res, next) {
   if (req.isAuthenticated() && req.user.dataValues.userName === req.params.name) {
     User.hasMany(Book, {foreignKey: 'writerId'});
   } else {
-    User.hasMany(Book, {foreignKey: 'writerId', scope: {public: true}});
+    User.hasMany(Book, {foreignKey: 'writerId', scope: {ispublic: true}});
   }
   User.findOne({
     where: {
