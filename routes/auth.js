@@ -30,7 +30,10 @@ router.post('/register', (req, res, next) => {
             }
           })(req, res, next);
         })
-        .catch(err => res.status(500).json({error: '服务器创建用户出错，请联系管理员'}));
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json({error: '服务器创建用户出错，请联系管理员'});
+        });
     })
     .catch(error => res.status(400).json(error.message));
 });

@@ -198,7 +198,7 @@ router.get('/books/:bookId', function(req, res, next) {
           where: {
             [Op.and]: [
               {parent: req.params.bookId},
-              {public: true}
+              {ispublic: true}
             ]
           },
           attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt']
