@@ -43,7 +43,7 @@ router.post('/upload/image', ensureLoggedIn(), uploadImage, function(req, res, n
 router.post('/articles/article', ensureLoggedIn(), function(req, res, next) {
   const { id, title, depth, parent, content, order, ispublic, updatedAt, writerid, superior } = req.body;// writerid不是articles中的字段，用来判断文章归属
   // 这个parent对应book里面外键id，所以不能少也不能错,剩下的货是not null字段
-  if (!(parent && title && typeof depth && order && ispublic && superior)) {
+  if (!(parent && title && depth && order && ispublic && superior)) {
     res.status(500).json({error: '程序有问题请修复！！！缺少必要字段'});
   } else {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
