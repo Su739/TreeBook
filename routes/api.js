@@ -43,8 +43,8 @@ router.post('/upload/image', ensureLoggedIn(), uploadImage, function(req, res, n
 router.post('/articles/article', ensureLoggedIn(), function(req, res, next) {
   const { id, title, depth, parent, content, order, ispublic, updatedAt, writerid, superior } = req.body;// writerid不是articles中的字段，用来判断文章归属
   // 这个parent对应book里面外键id，所以不能少也不能错,剩下的货是not null字段
-  if (!(parent && title && depth && order && ispublic && superior)) {
-    console.log(req.body);
+  // 然后之前犯了一个低级错误，就是这里面的字段(主要是最后一个)可能是0 ！0 为true
+  if (!(parent && title && typeof depth === 'number' && typeof order === 'number' && ispublic && typeof superior === 'number')) {
     res.status(500).json({error: '程序有问题请修复！！！缺少必要字段'});
   } else {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
