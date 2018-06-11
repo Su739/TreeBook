@@ -245,4 +245,18 @@ router.get('/users/:name', function(req, res, next) {
     .catch(error => res.status(500).json({error: error.message}));
 });
 
+/* GET articles sort by time desc */
+router.get('/v0/articles', function(req, res, next) {
+  const { page = 1, limit = 20 } = req.query;
+  Article.findAndCountAll({
+    order: [['id', 'DESC']],
+    offset: page * limit,
+    limit
+  })
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(error => res.status(500).json({error: error.message}));
+});
+
 module.exports = router;
