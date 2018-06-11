@@ -158,6 +158,21 @@ router.get('/users/:userId/profile', function(req, res, next) {
     .catch(error => res.status(500).json({error: error.message}));
 });
 
+/* GET user's books. */
+router.get('/users/:userId/books', function(req, res, next) {
+  Book.findAll({
+    where: { writerId: req.params.userId }
+  })
+    .then(result => {
+      if (result && result.length > 0) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({error: '您访问的网址不存在'});
+      }
+    })
+    .catch(error => res.status(500).json({error: error.message}));
+});
+
 /* GET article by id */
 router.get('/a/:id', function(req, res, next) {
   Article.findById(req.params.id)
@@ -247,14 +262,36 @@ router.get('/users/:name', function(req, res, next) {
 
 /* GET articles sort by time desc */
 router.get('/v0/articles', function(req, res, next) {
-  const { page = 1, limit = 20 } = req.query;
+  const { page = 1, limit = 10 } = req.query;
   Article.findAndCountAll({
     order: [['id', 'DESC']],
     offset: (page - 1) * limit,
     limit
   })
     .then(result => {
-      res.status(200).json(result.rows);
+      if (result.count > 0) {
+        res.status(200).json(result.rows);
+      } else {
+        res.status(404).json({error: '您访问的网址不存在，或者参数超出范围'});
+      }
+    })
+    .catch(error => res.status(500).json({error: error.message}));
+});
+
+/* GET articles sort by time desc */
+router.get('/v0/books', function(req, res, next) {
+  const { page = 1, limit = 10 } = req.query;
+  Book.findAndCountAll({
+    order: [['id', 'DESC']],
+    offset: (page - 1) * limit,
+    limit
+  })
+    .then(result => {
+      if (result.count > 0) {
+        res.status(200).json(result.rows);
+      } else {
+        res.status(404).json({error: '您访问的网址不存在，或者参数超出范围'});
+      }
     })
     .catch(error => res.status(500).json({error: error.message}));
 });
