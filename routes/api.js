@@ -250,7 +250,7 @@ router.get('/v0/articles', function(req, res, next) {
   const { page = 1, limit = 20 } = req.query;
   Article.findAndCountAll({
     order: [['id', 'DESC']],
-    offset: page * limit,
+    offset: page * (limit - 1),
     limit
   })
     .then(result => {
