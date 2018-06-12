@@ -1,4 +1,6 @@
 const Book = require('./book');
+const User = require('./user');
+
 module.exports = (sequelize, DataTypes) => {
   var Article = sequelize.define('Article', {
     id: {
@@ -40,6 +42,16 @@ module.exports = (sequelize, DataTypes) => {
     ispublic: {
       allowNull: false,
       type: DataTypes.BOOLEAN
+    },
+    writer: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      references: {
+        model: User,
+        key: 'userName'
+      },
+      onUpdate: 'cascade',
+      onDelete: 'cascade'
     },
     createdAt: {
       allowNull: false,
