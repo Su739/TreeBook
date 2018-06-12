@@ -41,7 +41,7 @@ router.post('/upload/image', ensureLoggedIn(), uploadImage, function(req, res, n
 
 /* POST create or update a book */
 router.post('/articles/article', ensureLoggedIn(), function(req, res, next) {
-  const { id, title, depth, parent, content, order, ispublic, updatedAt, writerid, superior } = req.body;// writerid不是articles中的字段，用来判断文章归属
+  const { id, title, depth, parent, content, order, ispublic, updatedAt, writerid, superior, abstract } = req.body;// writerid不是articles中的字段，用来判断文章归属
   // 这个parent对应book里面外键id，所以不能少也不能错,剩下的货是not null字段
   // 然后之前犯了一个低级错误，就是这里面的字段(主要是最后一个)可能是0 ！0 为true
   if (!(parent && title && typeof depth === 'number' && typeof order === 'number' && ispublic && typeof superior === 'number')) {
@@ -50,13 +50,13 @@ router.post('/articles/article', ensureLoggedIn(), function(req, res, next) {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
       if (!id || id === -1) {
         Article.create({
-          title, depth, parent, content, order, ispublic, updatedAt, superior
+          title, depth, parent, content, order, ispublic, updatedAt, superior, abstract
         })
           .then(article => res.status(200).json(article))
           .catch(err => res.status(500).json({error: err.message}));
       } else {
         Article.update({
-          title, depth, parent, content, order, ispublic, updatedAt, superior
+          title, depth, parent, content, order, ispublic, updatedAt, superior, abstract
         }, {
           where: {id: id},
           returning: true
@@ -199,7 +199,7 @@ router.get('/books/:bookId', function(req, res, next) {
           where: {
             parent: req.params.bookId
           },
-          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt']
+          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt', 'createdAt', 'abstract']
         })
           .then(articles => {
             if (articles) {
@@ -217,7 +217,7 @@ router.get('/books/:bookId', function(req, res, next) {
               {ispublic: true}
             ]
           },
-          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt']
+          attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt', 'createdAt', 'abstract']
         })
           .then(articles => {
             if (articles) {
@@ -264,6 +264,13 @@ router.get('/users/:name', function(req, res, next) {
 router.get('/v0/articles', function(req, res, next) {
   const { page = 1, limit = 10 } = req.query;
   Article.findAndCountAll({
+    where: {
+      [Op.and]: [
+        {parent: req.params.bookId},
+        {ispublic: true}
+      ]
+    },
+    attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt', 'createdAt', 'abstract'],
     order: [['id', 'DESC']],
     offset: (page - 1) * limit,
     limit
