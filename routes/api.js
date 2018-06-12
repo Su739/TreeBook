@@ -264,12 +264,7 @@ router.get('/users/:name', function(req, res, next) {
 router.get('/v0/articles', function(req, res, next) {
   const { page = 1, limit = 10 } = req.query;
   Article.findAndCountAll({
-    where: {
-      [Op.and]: [
-        {parent: req.params.bookId},
-        {ispublic: true}
-      ]
-    },
+    where: { ispublic: true },
     attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt', 'createdAt', 'abstract'],
     order: [['id', 'DESC']],
     offset: (page - 1) * limit,
