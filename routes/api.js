@@ -285,14 +285,17 @@ router.get('/users/:name', function(req, res, next) {
     })
     .catch(error => res.status(500).json({error: error.message}));
 }); */
-
+/* GET articles sort by time desc */
 router.get('/v0/articles', function(req, res, next) {
   Article.belongsTo(Book, {foreignKey: 'article_book_fkey'});
   Book.belongsTo(User, {foreignKey: 'book_user_fkey'});
   const { page = 1, limit = 10 } = req.query;
+  if (page < 0 || limit < 1) {
+    res.status(404).json({error: '您访问的网址不存在，或者参数超出范围'});
+  }
   Article.findAndCountAll({
     where: { ispublic: true },
-    attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'updatedAt', 'createdAt', 'abstract'],
+    attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'writer', 'updatedAt', 'createdAt', 'abstract'],
     order: [['id', 'DESC']],
     offset: (page - 1) * limit,
     limit
