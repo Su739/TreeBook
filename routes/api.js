@@ -287,12 +287,11 @@ router.get('/users/:name', function(req, res, next) {
 }); */
 /* GET articles sort by time desc */
 router.get('/v0/articles', function(req, res, next) {
-  Article.belongsTo(Book, {foreignKey: 'article_book_fkey'});
-  Book.belongsTo(User, {foreignKey: 'book_user_fkey'});
   const { page = 1, limit = 10 } = req.query;
   if (page < 0 || limit < 1) {
     res.status(404).json({error: '您访问的网址不存在，或者参数超出范围'});
   }
+
   Article.findAndCountAll({
     where: { ispublic: true },
     attributes: ['id', 'title', 'superior', 'depth', 'parent', 'order', 'ispublic', 'writer', 'updatedAt', 'createdAt', 'abstract'],
@@ -302,6 +301,22 @@ router.get('/v0/articles', function(req, res, next) {
   })
     .then(result => {
       if (result.count > 0) {
+        const pageCount = Math.ceil(result.count / limit);// the last page number
+
+        // add link to the response header
+        if (pageCount > 1) {
+          if (page === 1) {
+            const inFirstPage = `<https://www.lg739.com/api/v0/articles?page=${page + 1}>; rel="next", <https://www.lg739.com/api/v0/articles?page=${pageCount}>; rel="last"`;
+            res.append('Link', inFirstPage);
+          } else if (page > 1 && page < pageCount) {
+            const inMiddlePage = `<https://www.lg739.com/api/v0/articles?page=${page - 1}>; rel="prev", <https://www.lg739.com/api/v0/articles?page=${page + 1}>; rel="next", <https://www.lg739.com/api/v0/articles?page=${pageCount}>; rel="last", <https://www.lg739.com/api/v0/articles?page=1>; rel="first"`;
+            res.append('Link', inMiddlePage);
+          } else {
+            const inLastPage = `<https://www.lg739.com/api/v0/articles?page=${page - 1}>; rel="prev", <https://www.lg739.com/api/v0/articles?page=${page + 1}>; rel="next", <https://www.lg739.com/api/v0/articles?page=1>; rel="first"`;
+            res.append('Link', inLastPage);
+          }
+        }
+
         res.status(200).json(result.rows);
       } else {
         res.status(404).json({error: '您访问的网址不存在，或者参数超出范围'});
