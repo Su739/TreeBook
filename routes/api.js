@@ -313,7 +313,7 @@ router.get('/v0/articles', function(req, res, next) {
             const inMiddlePage = `<https://www.lg739.com/api/v0/articles?page=${page - 1}>; rel="prev", <https://www.lg739.com/api/v0/articles?page=${page + 1}>; rel="next", <https://www.lg739.com/api/v0/articles?page=${pageCount}>; rel="last", <https://www.lg739.com/api/v0/articles?page=1>; rel="first"`;
             res.append('Link', inMiddlePage);
           } else {
-            const inLastPage = `<https://www.lg739.com/api/v0/articles?page=${page - 1}>; rel="prev", <https://www.lg739.com/api/v0/articles?page=${page + 1}>; rel="next", <https://www.lg739.com/api/v0/articles?page=1>; rel="first"`;
+            const inLastPage = `<https://www.lg739.com/api/v0/articles?page=${page - 1}>; rel="prev", <https://www.lg739.com/api/v0/articles?page=1>; rel="first"`;
             res.append('Link', inLastPage);
           }
         }
