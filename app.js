@@ -10,7 +10,6 @@ const RedisStore = require('connect-redis')(session);
 const passport = require('passport');
 
 const auth = require('./routes/auth');
-const users = require('./routes/users');
 const api = require('./routes/api');
 
 const authCookieField = require('./middleware/authCookieField');
@@ -44,7 +43,6 @@ app.use(passport.session());
 app.use(authCookieField);
 
 app.use('/auth', auth);
-app.use('/users', users);
 app.use('/api', api);
 
 // catch 404 and forward to error handler
