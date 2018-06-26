@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         len: [1, 60]
       }
     },
-    writerId: {
+    writerid: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {

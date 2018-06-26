@@ -87,13 +87,13 @@ router.post('/books/book', ensureLoggedIn(), function(req, res, next) {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
       if (!id) {
         Book.create({
-          name, writerId: writerid, description, ispublic, company, updatedAt
+          name, writerid, description, ispublic, company, updatedAt
         })
           .then(book => res.status(200).json(book))
           .catch(err => res.status(500).json({error: err.message}));
       } else {
         Book.update({
-          name, writerId: writerid, description, ispublic, company, updatedAt
+          name, writerid, description, ispublic, company, updatedAt
         }, {
           where: {id: id},
           returning: true
@@ -162,7 +162,7 @@ router.get('/users/:userId/profile', function(req, res, next) {
 /* GET user's books. */
 router.get('/users/:userId/books', function(req, res, next) {
   Book.findAll({
-    where: { writerId: req.params.userId }
+    where: { writerid: req.params.userId }
   })
     .then(result => {
       if (result && result.length > 0) {
@@ -195,7 +195,7 @@ router.get('/books/:bookId', function(req, res, next) {
         res.status(404).json({error: '您访问的网址不存在'});
         return;
       }
-      if (req.user && book.writerId === req.user.dataValues.id) {
+      if (req.user && book.writerid === req.user.dataValues.id) {
         Article.findAll({
           where: {
             parent: req.params.bookId
@@ -237,9 +237,9 @@ router.get('/books/:bookId', function(req, res, next) {
 router.get('/users/:name', function(req, res, next) {
   User.hasOne(UserProfile, {foreignKey: 'userId'});
   if (req.isAuthenticated() && req.user.dataValues.userName === req.params.name) {
-    User.hasMany(Book, {foreignKey: 'writerId'});
+    User.hasMany(Book, {foreignKey: 'writerid'});
   } else {
-    User.hasMany(Book, {foreignKey: 'writerId', scope: {ispublic: true}});
+    User.hasMany(Book, {foreignKey: 'writerid', scope: {ispublic: true}});
   }
   User.findOne({
     where: {
