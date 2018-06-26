@@ -51,13 +51,13 @@ router.post('/articles/article', ensureLoggedIn(), function(req, res, next) {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
       if (!id || id === -1) {
         Article.create({
-          title, depth, parent, content, order, ispublic, updatedAt, superior, abstract, writer: req.user.dataValues.name
+          title, depth, parent, content, order, ispublic, updatedAt, superior, abstract, writer: req.user.dataValues.userName
         })
           .then(article => res.status(200).json(article))
           .catch(err => res.status(500).json({error: err.message}));
       } else {
         Article.update({
-          title, depth, parent, content, order, ispublic, updatedAt, superior, abstract, writer: req.user.dataValues.name
+          title, depth, parent, content, order, ispublic, updatedAt, superior, abstract, writer: req.user.dataValues.userName
         }, {
           where: {id: id},
           returning: true
@@ -85,7 +85,6 @@ router.post('/books/book', ensureLoggedIn(), function(req, res, next) {
     res.status(500).json({error: '程序有问题请修复！！！缺少必要字段'});
   } else {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
-      console.log(req.user.dataValues);
       if (!id) {
         Book.create({
           name, writerid, description, ispublic, company, updatedAt
@@ -93,7 +92,7 @@ router.post('/books/book', ensureLoggedIn(), function(req, res, next) {
           // 每次新建图书，都要为该书增加一个初始页(初始文章)
           .then(book =>
             Article.create({
-              title: '前言', depth: 0, parent: book.id, content: '写点什么介绍以下这本书吧。', order: 1, ispublic: true, updatedAt, superior: -1, abstract: book.description, writer: req.user.dataValues.name
+              title: '前言', depth: 0, parent: book.id, content: '写点什么介绍以下这本书吧。', order: 1, ispublic: true, updatedAt, superior: -1, abstract: book.description, writer: req.user.dataValues.userName
             })
               .then(() => res.status(200).json(book)))
           .catch(err => res.status(500).json({error: err.message}));
