@@ -89,7 +89,12 @@ router.post('/books/book', ensureLoggedIn(), function(req, res, next) {
         Book.create({
           name, writerid, description, ispublic, company, updatedAt
         })
-          .then(book => res.status(200).json(book))
+          // 每次新建图书，都要为该书增加一个初始页(初始文章)
+          .then(book =>
+            Article.create({
+              title: '前言', depth: 0, parent: book.id, content: '写点什么介绍以下这本书吧。', order: 1, ispublic: true, updatedAt, superior: -1, abstract: book.description
+            })
+              .then(() => res.status(200).json(book)))
           .catch(err => res.status(500).json({error: err.message}));
       } else {
         Book.update({
