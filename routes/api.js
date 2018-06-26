@@ -85,6 +85,7 @@ router.post('/books/book', ensureLoggedIn(), function(req, res, next) {
     res.status(500).json({error: '程序有问题请修复！！！缺少必要字段'});
   } else {
     if (req.user && writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
+      console.log(req.user.dataValues);
       if (!id) {
         Book.create({
           name, writerid, description, ispublic, company, updatedAt
