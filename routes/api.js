@@ -166,7 +166,7 @@ router.delete('/books/:id', ensureLoggedIn(), function(req, res) {
 });
 
 // 删除一篇文章
-router.delete('/articles/:id', ensureLoggedIn(), function(req, res) {
+router.delete('/a/:id', ensureLoggedIn(), function(req, res) {
   Article.findById(req.params.id)
     .then(article => {
       if (req.user && article.writer === req.user.dataValues.userName) { // 确认登录用户拥有被操作数据
