@@ -151,6 +151,34 @@ router.post('/users/profile', ensureLoggedIn(), uploadAvatar,
     }
   });
 
+// 删除一本书
+router.delete('/books/:id', ensureLoggedIn(), function(req, res) {
+  Book.findById(req.params.id)
+    .then(book => {
+      if (req.user && book.writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
+        Book.destroy({ where: { id: req.params.id }, limit: 1 })
+          .then(() => res.status(200).json({entity: 'books', status: 'success', message: '删除成功', id: req.params.id}));
+      } else {
+        res.status(500).json({error: '有问题！！！不能操作不属于你的账户'});
+      }
+    })
+    .catch(error => res.status(500).json({error: error.message}));
+});
+
+// 删除一篇文章
+router.delete('/articles/:id', ensureLoggedIn(), function(req, res) {
+  Article.findById(req.params.id)
+    .then(article => {
+      if (req.user && article.writer === req.user.dataValues.userName) { // 确认登录用户拥有被操作数据
+        Article.destroy({ where: { id: req.params.id }, limit: 1 })
+          .then(() => res.status(200).json({entity: 'articles', status: 'success', message: '删除成功', id: req.params.id}));
+      } else {
+        res.status(500).json({error: '有问题！！！不能操作不属于你的账户'});
+      }
+    })
+    .catch(error => res.status(500).json({error: error.message}));
+});
+
 /* GET user's profile. */
 router.get('/users/:userId/profile', function(req, res, next) {
   UserProfile.findById(req.params.userId)
