@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    abstract: {
+      type: DataTypes.STRING
+    },
     superior: {
       allowNull: false,
       type: DataTypes.INTEGER,
