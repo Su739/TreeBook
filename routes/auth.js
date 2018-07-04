@@ -2,6 +2,7 @@ const express = require('express');
 const createUser = require('../authorization/lib/auth-helpers').createUser;
 const passport = require('../authorization/lib/local');
 const { validUserName, validRegister } = require('../authorization/lib/validator');
+const { UserProfile } = require('../db/db-repo');
 
 const router = express.Router();
 
@@ -24,15 +25,21 @@ router.post('/register', (req, res, next) => {
           passport.authenticate('local', (err, user, info) => {
             if (err) res.status(401).json({error: err.message});
             if (user) {
-              res.status(200).json({
-                id: user.id, name: user.userName, email: user.email
-              });
+              const { id, userName } = user;
+              UserProfile.create({
+                userId: id, nick: userName
+              })
+                .then(() => {
+                  res.status(200).json({
+                    id: user.id, name: user.userName, email: user.email
+                  });
+                })
+                .catch(error => res.status(500).json({error: error.message}));
             }
           })(req, res, next);
         })
         .catch((err) => {
-          console.log(err);
-          res.status(500).json({error: '服务器创建用户出错，请联系管理员'});
+          res.status(500).json({error: err.message});
         });
     })
     .catch(error => res.status(400).json(error.message));
