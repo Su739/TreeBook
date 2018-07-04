@@ -158,7 +158,7 @@ router.delete('/books/:id', ensureLoggedIn(), function(req, res) {
     .then(book => {
       if (req.user && book.writerid === req.user.dataValues.id) { // 确认登录用户拥有被操作数据
         Book.destroy({ where: { id: req.params.id }, limit: 1 })
-          .then(() => res.status(200).json({entity: 'books', status: 'success', message: '删除成功', id: req.params.id}));
+          .then(() => res.status(200).json({entity: 'books', writer: req.user.dataValues.name, message: '删除成功', id: req.params.id}));
       } else {
         res.status(500).json({error: '有问题！！！不能操作不属于你的账户'});
       }
