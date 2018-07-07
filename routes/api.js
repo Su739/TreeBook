@@ -18,7 +18,8 @@ const router = express.Router();
 
 router.use(function(req, res, next) {
   console.log(req.hostname);
-  res.header('Access-Control-Allow-Origin', req.hostname === 'www.lg739.com' ? 'http://blog.lg739.com:3000' : 'http://localhost:3000');
+  res.header('Access-Control-Allow-Origin',
+    (req.hostname === 'www.lg739.com' || req.hostname === 'http://blog.lg739.com:3000') ? 'http://blog.lg739.com:3000' : 'http://localhost:3000');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Expose-Headers', 'link');
