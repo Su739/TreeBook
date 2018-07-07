@@ -7,7 +7,8 @@ const { UserProfile } = require('../db/db-repo');
 const router = express.Router();
 
 router.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Origin',
+    (req.hostname === 'www.lg739.com' || req.hostname === 'http://blog.lg739.com:3000') ? 'http://blog.lg739.com:3000' : 'http://localhost:3000');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Credentials', 'true');
   next();
