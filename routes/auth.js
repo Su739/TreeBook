@@ -21,7 +21,7 @@ router.post('/register', (req, res, next) => {
       createUser(req, res)
         .spread((user, created) => {
           if (!created) {
-            res.status(401).json({error: '该用户名已存在,换一个试试吧'});
+            res.status(401).json({field: 'username', message: '该用户名已存在,换一个试试吧'});
           }
           passport.authenticate('local', (err, user, info) => {
             if (err) res.status(401).json({error: err.message});
@@ -43,7 +43,7 @@ router.post('/register', (req, res, next) => {
           res.status(500).json({error: err.message});
         });
     })
-    .catch(error => res.status(400).json(error.message));
+    .catch(error => res.status(401).json(error));
 });
 
 /* POST 登录 */
@@ -52,7 +52,7 @@ router.post('/login', (req, res, next) => {
     .then(() => {
       passport.authenticate('local', (err, user, info) => {
         if (err) res.status(401).json({error: err.message});
-        if (!user) res.status(401).json({error: '密码错误'});
+        if (!user) res.status(401).json({field: 'password', message: '密码错误'});
         if (user) {
           req.logIn(user, function(err) {
             if (err) res.status(500).json({error: err});
@@ -65,7 +65,7 @@ router.post('/login', (req, res, next) => {
         }
       })(req, res, next);
     })
-    .catch(error => res.status(401).json({error: error.message}));
+    .catch(error => res.status(401).json(error));
 });
 
 /* GET logout. */

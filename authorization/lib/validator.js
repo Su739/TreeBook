@@ -9,7 +9,7 @@ function validUserName(req, options = { minLength: 2, maxLength: 18, pattern: /^
   const username = req.body.username;
   return new Promise((resolve, reject) => {
     if (!username || username.length > maxLength || username.length < minLength || !pattern.test(username)) {
-      reject(new Error('用户名应该由2-18个字母、数字或者下划线组成'));
+      reject({ field: 'username', message: '用户名应该由2-18个字母、数字或者下划线组成' });
     } else {
       resolve();
     }
@@ -21,7 +21,7 @@ function validPassword(req, options = { minLength: 8, maxLength: 20 }) {
   const password = req.body.password;
   return new Promise((resolve, reject) => {
     if (!password || password.length > maxLength || password.length < minLength) {
-      reject(new Error('密码在8-20个字符之间'));
+      reject({field: 'username', message: '密码在8-20个字符之间'});
     } else {
       resolve();
     }
