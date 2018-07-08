@@ -51,7 +51,7 @@ router.post('/login', (req, res, next) => {
   validUserName(req)
     .then(() => {
       passport.authenticate('local', (err, user, info) => {
-        if (err) res.status(401).json({error: err.message});
+        if (err) res.status(401).json({field: 'username', message: err.message});
         if (!user) res.status(401).json({field: 'password', message: '密码错误'});
         if (user) {
           req.logIn(user, function(err) {
