@@ -28,7 +28,7 @@ router.post('/register', (req, res, next) => {
             if (user) {
               const { id, userName } = user;
               UserProfile.create({
-                userId: id, nickName: userName, avatr: 'default-avatar.png'
+                userId: id, nickName: userName, avatar: 'default-avatar.png'
               })
                 .then(() => {
                   res.status(200).json({
