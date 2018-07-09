@@ -29,7 +29,7 @@ app.use(cookieParser());
 
 app.use(session({
   cookie: {
-    maxAge: 5000000
+    maxAge: 10 * 24 * 60 * 60 * 1000
   },
   store: new RedisStore({ client: client }),
   secret: 'keybord cat',
