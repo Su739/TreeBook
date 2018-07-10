@@ -1,0 +1,54 @@
+doctype html
+html
+  head
+    meta(name='viewport', content='width=device-width,initial-scale=1,shrink-to-fit=no')
+    link(rel='stylesheet', href='/stylesheets/resume.css')
+    link(link rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css")
+    title= title
+  body
+    header 
+      h1 简历
+    main
+      article
+        section
+          h3 个人信息:
+          div(class='flex-container')
+            img(id='avatar', src='/test.jpg', class='flex-sm-1-4')
+            div(class='flex-sm-3-4')
+              ul(class='flex-container')
+                li(class='flex-sm-2-4') 
+                  span(class='item-label') 姓名: 
+                  .
+                    #{person.name}
+                li(class='flex-sm-2-4')
+                  span(class='item-label') 出生日期: 
+                  .
+                    #{person.birthday}
+                li(class='flex-sm-2-4')
+                  span(class='item-label') 性别: 
+                  .
+                    #{person.gender}
+                li(class='flex-sm-2-4') 
+                  span(class='item-label') 身高: 
+                  .
+                    #{person.height}
+                li(class='flex-sm-2-4')
+                  span(class='item-label') 体重: 
+                  .
+                    #{person.weight}
+                li(class='flex-sm-2-4')
+                  span(class='item-label') 大学: 
+                  .
+                    #{person.collage}
+                li(class='flex-sm-2-4')
+                  span(class='item-label') github: 
+                  |
+                  a(href=person.github, target='_blank') #{person.github}
+                li(class='flex-sm-2-4')
+                  span(class='item-label') 博客: 
+                  a(href=person.blog, target='_blank') #{person.blog}
+        section
+          h3 
+        section
+        section
+              

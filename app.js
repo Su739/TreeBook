@@ -11,6 +11,7 @@ const passport = require('passport');
 
 const auth = require('./routes/auth');
 const api = require('./routes/api');
+const resume = require('./routes/resume');
 
 const authCookieField = require('./middleware/authCookieField');
 
@@ -44,6 +45,7 @@ app.use(authCookieField);
 
 app.use('/auth', auth);
 app.use('/api', api);
+app.use('/resume', resume);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

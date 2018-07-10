@@ -1,0 +1,83 @@
+header h1 {
+  text-align: center;
+}
+
+main {
+  max-width: 960px;
+  margin: auto;
+  border: 1px solid #aaa;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+li {
+  list-style: none;
+  line-height: 1.5em;
+}
+
+h3 {
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.flex-1-4, .flex-2-4, .flex-3-4, .flex-4-4, .flex-sm-1-4, .flex-sm-2-4, .flex-sm-3-4,
+.flex-sm-4-4 {
+  width: 100%;
+}
+
+.flex-1-4 {
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+.flex-2-4 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+.flex-3-4 {
+  flex: 0 0 75%;
+  max-width: 75%;
+}
+.flex-4-4 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 576px) {
+  .flex-sm-1-4 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .flex-sm-2-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .flex-sm-3-4 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .flex-sm-4-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  h3 {
+    text-align: unset;
+  }
+}
+#avatar {
+  max-width: 72px;
+  height: 96px;
+  display: block;
+  margin: auto;
+}
+
+.item-label {
+  font-size: 0.8em;
+  color: rgb(184, 183, 183);
+}
