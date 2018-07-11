@@ -174,7 +174,7 @@ router.delete('/a/:id', ensureLoggedIn(), function(req, res) {
     .then(article => {
       if (req.user && article.writer === req.user.dataValues.userName) { // 确认登录用户拥有被操作数据
         Article.destroy({ where: { id: req.params.id }, limit: 1 })
-          .then(() => res.status(200).json({entity: 'articles', parent: req.params.parent, message: '删除成功', id: req.params.id}));
+          .then(() => res.status(200).json({entity: 'articles', parent: article.parent, message: '删除成功', id: req.params.id}));
       } else {
         res.status(500).json({error: '有问题！！！不能操作不属于你的账户'});
       }
